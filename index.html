@@ -3,40 +3,32 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Tesla Inspection Playbook</title>
-
+<title>Tesla Inspection & Negotiation Playbook</title>
 <style>
 :root{
---bg:#0b0e12;--p:#151a22;--p2:#1d2430;--line:#344052;
---text:#f5f7fa;--muted:#aab4c1;
---green:#34d399;--blue:#60a5fa;--yellow:#fbbf24;
---red:#fb7185;--purple:#a78bfa
+  --bg:#0b0e12;--panel:#151a22;--panel2:#1d2430;--line:#344052;
+  --text:#f5f7fa;--muted:#aab4c1;--green:#34d399;--blue:#60a5fa;
+  --yellow:#fbbf24;--red:#fb7185;--purple:#a78bfa
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-font:14px system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-.app{max-width:900px;margin:auto;padding:12px 12px 70px}
-.top{position:sticky;top:0;z-index:20;background:#0b0e12f2;
-padding:10px 0;border-bottom:1px solid #242c36;backdrop-filter:blur(10px)}
-h1{font-size:21px;margin:0}
+body{margin:0;background:linear-gradient(180deg,#090c10,#0c1015);color:var(--text);font:14px system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.app{max-width:980px;margin:auto;padding:12px 12px 72px}
+.top{position:sticky;top:0;z-index:30;background:#0b0e12f3;padding:10px 0;border-bottom:1px solid #242c36;backdrop-filter:blur(12px)}
+h1{font-size:21px;margin:0;line-height:1.2}
 .sub,.why{color:var(--muted);font-size:11px;line-height:1.45}
 .prog{height:6px;background:#252d38;border-radius:99px;overflow:hidden;margin-top:8px}
-.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--purple))}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width .2s}
 nav{display:flex;gap:6px;overflow:auto;padding-top:9px;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
-nav button,.btn,.opt{border:1px solid var(--line);background:#11161d;color:var(--text);
-border-radius:9px;padding:8px 10px;font-weight:650}
+nav button,.btn,.opt{border:1px solid var(--line);background:#11161d;color:var(--text);border-radius:9px;padding:8px 10px;font-weight:650}
 nav button{white-space:nowrap;font-size:11px}
 nav button.on{background:#eef3f8;color:#0b0e12}
 .tab{display:none}.tab.active{display:block}
-.card{background:var(--p);border:1px solid var(--line);border-radius:15px;
-padding:14px;margin:12px 0}
-h2{font-size:18px;margin:0 0 7px}
-h3{font-size:14px;margin:17px 0 8px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px;margin:12px 0}
+h2{font-size:18px;margin:0 0 7px} h3{font-size:14px;margin:17px 0 8px}
 .lead{color:var(--muted);font-size:12px;line-height:1.5}
 .facts,.values{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.fact,.valueCard{background:var(--p2);border:1px solid var(--line);
-border-radius:11px;padding:10px}
+.fact,.valueCard{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:10px}
 .fact b,.valueCard b{display:block}
 .fact small,.valueCard small{color:var(--muted);font-size:10px}
 .valueCard .money{font-size:23px;font-weight:800;margin:3px 0}
@@ -44,108 +36,115 @@ border-radius:11px;padding:10px}
 .valueCard.buy{border-color:#28705a;background:#10271f}
 .valueCard.warn{border-color:#826a1b;background:#28230f}
 .valueCard.bad{border-color:#7b3045;background:#2b151c}
-.field{margin:11px 0}
-label{display:block;margin-bottom:5px;font-size:12px;font-weight:650}
-input,select,textarea{width:100%;padding:10px;border-radius:9px;border:1px solid var(--line);
-background:#0d1218;color:var(--text);font:inherit}
-textarea{min-height:70px}
+.field{margin:11px 0} label{display:block;margin-bottom:5px;font-size:12px;font-weight:650}
+input,select,textarea{width:100%;padding:10px;border-radius:9px;border:1px solid var(--line);background:#0d1218;color:var(--text);font:inherit}
+textarea{min-height:72px;resize:vertical}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
 .opt{font-size:11px}
-.opt.excellent{background:#0b3326;border-color:#16845f}
-.opt.good{background:#103026;border-color:#297055}
-.opt.mixed{background:#10263f;border-color:#32679f}
-.opt.concern{background:#30280e;border-color:#80691c}
+.opt.excellent{background:#0b3326;border-color:#16845f}.opt.good{background:#103026;border-color:#297055}
+.opt.mixed{background:#10263f;border-color:#32679f}.opt.concern{background:#30280e;border-color:#80691c}
 .opt.bad{background:#35161f;border-color:#823149}
-.check,.question{background:#10151b;border:1px solid var(--line);
-border-radius:11px;padding:10px;margin:8px 0}
+.check,.question{background:#10151b;border:1px solid var(--line);border-radius:11px;padding:10px;margin:8px 0}
 .checktop{display:flex;justify-content:space-between;gap:8px}
-.weight{font-size:9px;background:#1c2530;border:1px solid #344356;
-padding:3px 6px;border-radius:99px;height:max-content}
+.weight{font-size:9px;background:#1c2530;border:1px solid #344356;padding:3px 6px;border-radius:99px;height:max-content;white-space:nowrap}
 .critical{font-size:9px;color:#ffc2cf;font-weight:800;margin-top:4px}
-.box,.info,.script{padding:10px;border-radius:11px;margin:8px 0;
-font-size:12px;line-height:1.5}
+.box,.info,.script{padding:10px;border-radius:11px;margin:8px 0;font-size:12px;line-height:1.5}
 .box{background:#2e270e;border:1px solid #76601a;color:#ffebaa}
 .box.good{background:#0d2d23;border-color:#2b7459;color:#c9f8e7}
 .box.bad{background:#32151e;border-color:#7d2f45;color:#ffd4dd}
 .info{background:#102033;border:1px solid #31527a;color:#d8eaff}
 .script{background:#0d1218;border:1px solid var(--line);white-space:pre-wrap}
-details{background:#10151b;border:1px solid var(--line);padding:10px;
-border-radius:11px;margin:8px 0}
+details{background:#10151b;border:1px solid var(--line);padding:10px;border-radius:11px;margin:8px 0}
 summary{font-weight:700;cursor:pointer}
-.steps{padding-left:20px;font-size:12px;line-height:1.55}
+.steps{padding-left:20px;font-size:12px;line-height:1.55}.steps li{margin:5px 0}
 .result{display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:center}
-.ring{width:82px;height:82px;border-radius:50%;display:grid;place-items:center;
-position:relative;background:conic-gradient(var(--blue) 0deg,#27313d 0)}
+.ring{width:82px;height:82px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(var(--blue) 0deg,#27313d 0)}
 .ring:after{content:"";position:absolute;inset:8px;border-radius:50%;background:#11161d}
 .ring span{z-index:2;font-size:21px;font-weight:800}
 .verdict{font-size:18px;font-weight:800}
-.flag{padding:8px 10px;border-left:3px solid var(--yellow);
-background:#171c23;border-radius:8px;margin:6px 0;font-size:12px}
+.flag{padding:8px 10px;border-left:3px solid var(--yellow);background:#171c23;border-radius:8px;margin:6px 0;font-size:12px}
 .flag.good{border-color:var(--green)}.flag.bad{border-color:var(--red)}
-.pill{display:inline-block;border:1px solid var(--line);background:#1a222d;
-border-radius:99px;padding:4px 7px;font-size:10px;margin:2px}
-.calcLine{display:flex;justify-content:space-between;gap:10px;
-border-bottom:1px solid #303946;padding:8px 0;font-size:12px}
-.calcLine:last-child{border:0}
-.formula{font-size:10px;color:var(--muted);line-height:1.5;margin-top:8px}
-.sticky{position:sticky;bottom:8px;display:flex;gap:7px;background:#10151bee;
-border:1px solid var(--line);padding:8px;border-radius:12px;z-index:30}
-.btn.primary{background:#eef3f8;color:#0b0e12}
-.btn.danger{background:#35161f;color:#ffd5de;border-color:#7f3047}
-@media(max-width:650px){.facts,.values,.row{grid-template-columns:1fr}}
+.pill{display:inline-block;border:1px solid var(--line);background:#1a222d;border-radius:99px;padding:4px 7px;font-size:10px;margin:2px}
+.calcLine{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #303946;padding:8px 0;font-size:12px}
+.calcLine:last-child{border:0}.formula{font-size:10px;color:var(--muted);line-height:1.5;margin-top:8px}
+.sticky{position:sticky;bottom:8px;display:flex;gap:7px;background:#10151bee;border:1px solid var(--line);padding:8px;border-radius:12px;z-index:30}
+.btn.primary{background:#eef3f8;color:#0b0e12}.btn.danger{background:#35161f;color:#ffd5de;border-color:#7f3047}
+.timeline{border-left:2px solid #344050;padding-left:12px;margin-left:5px}.timeline .event{margin:10px 0}.timeline b{font-size:12px}.timeline span{display:block;color:var(--muted);font-size:11px;line-height:1.4}
+.badge{display:inline-block;padding:3px 7px;border-radius:99px;background:#1d2732;border:1px solid #36475a;font-size:10px;margin-left:4px}
+.sourceLink{display:inline-block;margin:5px 5px 0 0;padding:6px 8px;border-radius:8px;border:1px solid #42617f;background:#102033;color:#d8eaff;text-decoration:none;font-size:11px;font-weight:700}
+.sourceLink:hover{text-decoration:underline}.proof{background:#0f161e;border:1px solid #304153;border-radius:11px;padding:10px;margin:8px 0}.proof b{display:block;margin-bottom:4px}.proof small{color:var(--muted);line-height:1.45;display:block}
+@media(max-width:650px){.facts,.values,.row{grid-template-columns:1fr}.result{grid-template-columns:80px 1fr}}
 </style>
 </head>
-
 <body>
 <div class="app">
 
 <div class="top">
-<h1>Tesla Inspection & Negotiation Playbook</h1>
-<div class="sub">VIN 5YJ3E1EA2MF052825 • 2021 Model 3 Standard Range Plus • saves locally</div>
-<div class="prog"><i id="prog"></i></div>
-<nav id="nav"></nav>
+  <h1>Tesla Inspection & Negotiation Playbook</h1>
+  <div class="sub">VIN 5YJ3E1EA2MF052825 • 2021 Model 3 Standard Range Plus RWD • evidence-driven • saves locally</div>
+  <div class="prog"><i id="prog"></i></div>
+  <nav id="nav"></nav>
 </div>
 
 <section class="tab active" id="research">
 <div class="card">
-<h2>1. Research & prep</h2>
+<h2>1. Research & known history</h2>
 
 <div class="facts">
-<div class="fact"><b>4,861 mi at Copart</b><small>March 2023 salvage auction</small></div>
-<div class="fact"><b>Rear-end total loss</b><small>OH salvage → MI rebuilt</small></div>
-<div class="fact"><b>$34,491 repair estimate</b><small>Pre-loss ACV $42,890</small></div>
-<div class="fact"><b>138,918-mi anomaly</b><small>April 2024 NMVTIS</small></div>
-<div class="fact"><b>Current ask ≈ $19,992</b><small>Repeatedly discounted</small></div>
-<div class="fact"><b>Listed since 2023</b><small>Long time on market</small></div>
+  <div class="fact"><b>4,861 mi at salvage auction</b><small>March 2023 Copart / Ohio salvage</small></div>
+  <div class="fact"><b>Rear-end total-loss history</b><small>Repair estimate $34,491; ACV $42,890</small></div>
+  <div class="fact"><b>Michigan REBUILT SALVAGE</b><small>Brand recorded April 2024</small></div>
+  <div class="fact"><b>138,918-mi title entry</b><small>Michigan/NMVTIS April 2024; later title returns to 4,861</small></div>
+  <div class="fact"><b>2025 rear-end crash record</b><small>EpicVIN/VINCHAIN shows Apr 25, 2025 - details unknown</small></div>
+  <div class="fact"><b>Long dealer history</b><small>Listings at 4,861 mi since 2023; prices fell sharply</small></div>
 </div>
 
-<h3>Tesla prep tonight</h3>
-
+<h3>Important report interpretation</h3>
 <div class="info">
-<b>Do this before the visit:</b><br><br>
-1. Download the official Tesla app.<br>
-2. Create/sign into your Tesla account.<br>
-3. Open Menu → My Products → Add Product so you know where ownership claiming happens.<br>
-4. Do NOT try to falsely claim ownership. Tesla requires proof of ownership and access to the vehicle.<br>
-5. You can run Tesla's public VIN recall lookup separately.<br><br>
-There is no public Tesla VIN page that reveals Unsupported Vehicle, HV Safety Inspection or Supercharging restriction status.
+<b>The 138,918-mile number appearing in both paid reports is NOT two independent confirmations.</b><br><br>
+Both reports identify the source as the same Michigan/NMVTIS title event. EpicVIN also reports that NMVTIS has <b>no "Not Actual," "Tampering," "May Be Altered," or "Odometer Discrepancy" brand</b>, and the later Michigan title is again reported at 4,861 miles.<br><br>
+That makes a clerical/title-entry error plausible, but not proven. Your strongest evidence tomorrow is the physical odometer, current title, Tesla service-history mileage, and any Michigan correction documentation.
+</div>
+
+<div class="box">
+<b>NEW from the second report:</b> there is an August 2022 crash record before the 2023 salvage sequence, plus a separate-looking April 25, 2025 rear-end crash record after the Michigan rebuild. The 2022 event may be part of the same eventual total-loss chain. The 2025 event is more important because it appears after the rebuild and needs a direct explanation.
+</div>
+
+<h3>Timeline</h3>
+<div class="timeline">
+  <div class="event"><b>Oct 2021 - 15 mi</b><span>Ohio title/registration.</span></div>
+  <div class="event"><b>Aug 26, 2022 - crash record</b><span>Impact area unspecified. Could be related to the later salvage event; do not assume it is separate without evidence.</span></div>
+  <div class="event"><b>Jan-Mar 2023 - junk/salvage + rear-end auction</b><span>Copart/NMVTIS; 4,861 mi; Ohio salvage brand.</span></div>
+  <div class="event"><b>Mar 2023 onward - dealer listings at 4,861 mi</b><span>Initially near $39k; later price reductions.</span></div>
+  <div class="event"><b>Apr 26, 2024 - Michigan rebuilt + 138,918-mi title entry</b><span>Same NMVTIS event that both paid reports reproduce.</span></div>
+  <div class="event"><b>Nov 18, 2024 - Michigan title at 4,861 mi</b><span>No NMVTIS odometer-discrepancy brand reported.</span></div>
+  <div class="event"><b>Apr 25, 2025 - rear-end crash record</b><span>VINCHAIN/EpicVIN; no mileage or repair details provided. Must be asked about.</span></div>
+  <div class="event"><b>2026 - listed around $19,992</b><span>Still advertised at 4,861 mi.</span></div>
+</div>
+
+<h3>Current clean-title benchmarks</h3>
+<div class="values">
+  <div class="valueCard hero"><small>KBB FAIR PURCHASE PRICE - CLEAN TITLE</small><div class="money">$23,200</div><small>2021 Model 3 Standard Range Plus, good condition / typical mileage</small></div>
+  <div class="valueCard"><small>KBB PRIVATE PARTY - CLEAN</small><div class="money">$21,400</div></div>
+  <div class="valueCard"><small>KBB TRADE-IN - CLEAN</small><div class="money">$19,200</div></div>
+  <div class="valueCard"><small>DEALER ASK</small><div class="money" id="askDisplay">$19,992</div><small>Rebuilt-title vehicle</small></div>
 </div>
 
 <div class="row">
-<div class="field"><label>Dealer asking price</label><input id="ask" type="number" value="19992"></div>
-<div class="field"><label>Physical odometer tomorrow</label><input id="odo" type="number" placeholder="Enter when seen"></div>
+  <div class="field"><label>Dealer asking price</label><input id="ask" type="number" value="19992"></div>
+  <div class="field"><label>Physical odometer when seen</label><input id="odo" type="number" placeholder="e.g. 4972"></div>
 </div>
 
 <div class="field">
 <label>Insurance result</label>
-<select id="insurance" class="scored" data-label="Insurance" data-weight="8" data-critical="yes">
-<option value="unknown">Not checked</option>
-<option value="excellent">Normal full coverage available</option>
-<option value="good">Available, modest premium</option>
-<option value="mixed">Available but expensive</option>
-<option value="concern">Limited carrier/coverage options</option>
-<option value="bad">Cannot insure acceptably</option>
+<select id="insurance" class="scored" data-label="Insurance availability" data-weight="8" data-critical="yes">
+  <option value="unknown">Not checked</option>
+  <option value="excellent">Normal full coverage available</option>
+  <option value="good">Available with modest premium</option>
+  <option value="mixed">Available but noticeably expensive</option>
+  <option value="concern">Limited carrier / coverage options</option>
+  <option value="bad">Cannot insure acceptably</option>
 </select>
 </div>
 
@@ -153,69 +152,75 @@ There is no public Tesla VIN page that reveals Unsupported Vehicle, HV Safety In
 </div>
 </section>
 
-
 <section class="tab" id="dealer">
 <div class="card">
 <h2>2. Dealer interaction</h2>
 
-<div class="script">“I'm interested in the red 2021 Model 3. The price and mileage caught my attention. Before we get too far, what can you tell me about the car and its history?”</div>
+<div class="script">Opening:
+“I'm interested in the red 2021 Model 3. The price and mileage caught my attention. Before we get too far, what can you tell me about the car and its history?”</div>
 
 <div class="question scoreQ" data-key="disclosure" data-label="Dealer disclosure honesty" data-weight="6">
-<b>How did they disclose the rebuilt history?</b>
-<div class="opts">
-<button class="opt" data-v="excellent">Volunteered full salvage/rebuilt story immediately</button>
-<button class="opt" data-v="good">Volunteered rebuilt title</button>
-<button class="opt" data-v="mixed">Admitted after general title question</button>
-<button class="opt" data-v="concern">Only after direct salvage question</button>
-<button class="opt" data-v="bad">Denied / claimed clean</button>
-<button class="opt" data-v="unknown">Unknown</button>
-</div>
+  <b>How did they disclose the rebuilt/salvage history?</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">Volunteered full history immediately</button>
+    <button class="opt" data-v="good">Volunteered rebuilt title</button>
+    <button class="opt" data-v="mixed">Admitted after general title/accident question</button>
+    <button class="opt" data-v="concern">Only after direct salvage question</button>
+    <button class="opt" data-v="bad">Denied / represented as clean</button>
+    <button class="opt" data-v="unknown">Unknown</button>
+  </div>
 </div>
 
 <div class="question scoreQ" data-key="repairStory" data-label="Repair explanation" data-weight="5">
-<b>Quality of their repair explanation</b>
-<div class="opts">
-<button class="opt" data-v="excellent">Detailed + consistent + knows parts/shop</button>
-<button class="opt" data-v="good">Specific, minor gaps</button>
-<button class="opt" data-v="mixed">General but plausible</button>
-<button class="opt" data-v="concern">Very vague</button>
-<button class="opt" data-v="bad">Contradictory / evasive</button>
-<button class="opt" data-v="unknown">Unknown</button>
-</div>
+  <b>Quality of their repair explanation</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">Detailed + consistent + knows shop/parts</button>
+    <button class="opt" data-v="good">Specific with minor gaps</button>
+    <button class="opt" data-v="mixed">General but plausible</button>
+    <button class="opt" data-v="concern">Very vague</button>
+    <button class="opt" data-v="bad">Contradictory / evasive</button>
+    <button class="opt" data-v="unknown">Unknown</button>
+  </div>
 </div>
 
 <details open>
-<summary>What “Michigan REBUILT SALVAGE” actually means</summary>
+<summary>What Michigan “REBUILT SALVAGE” actually means</summary>
 <div class="info">
-Michigan rebuilt status is NOT self-certified.<br><br>
-• A salvage vehicle is repaired.<br>
-• TR-13A is completed; repair work is certified by an appropriately certified mechanic.<br>
-• Major-component receipts/parts documentation are presented.<br>
-• A specially trained law-enforcement Salvage Vehicle Inspector reviews the documents and inspects the vehicle.<br>
-• The inspector checks VIN/part identification, ownership of repair parts, Michigan equipment/safety compliance and the certified repair work.<br>
-• If it passes, the inspector completes TR-13B Salvage Vehicle Recertification.<br>
-• Michigan then issues a title permanently branded REBUILT SALVAGE.<br><br>
-Important: this is a Michigan legal/safety recertification process. It is NOT Tesla certification of the battery, crash structure or HV system.
+A Michigan rebuilt title is <b>not self-certified</b>.<br><br>
+The state process requires the salvage vehicle to be repaired, TR-13A documentation, repair certification by an appropriately certified mechanic, documentation/receipts for major components, and inspection by a specially trained law-enforcement salvage vehicle inspector. The inspector completes TR-13B if the vehicle passes. Michigan then issues a title permanently branded <b>REBUILT SALVAGE</b>.<br><br>
+This establishes compliance with Michigan's rebuild/title process. It is <b>not</b> the same as Tesla certifying the high-voltage battery, crash structure, warranty eligibility, or Supercharging.
 </div>
 </details>
 
 <div class="question scoreQ" data-key="miDocs" data-label="Michigan rebuild documentation" data-weight="7">
-<b>What Michigan rebuild paperwork can they show?</b>
-<div class="opts">
-<button class="opt" data-v="excellent">TR-13A + TR-13B + repair/parts receipts</button>
-<button class="opt" data-v="good">TR-13B / inspection paperwork + rebuilt title</button>
-<button class="opt" data-v="mixed">Current rebuilt title only</button>
-<button class="opt" data-v="concern">Claims it was inspected but no documentation</button>
-<button class="opt" data-v="bad">Claims no state inspection was required / story conflicts</button>
-<button class="opt" data-v="unknown">Not checked</button>
-</div>
+  <b>What Michigan rebuild paperwork can they show?</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">TR-13A + TR-13B + parts/repair receipts</button>
+    <button class="opt" data-v="good">TR-13B / meaningful state inspection docs + rebuilt title</button>
+    <button class="opt" data-v="mixed">Current rebuilt title only</button>
+    <button class="opt" data-v="concern">Claims inspection but no paperwork</button>
+    <button class="opt" data-v="bad">Says no inspection was required / story conflicts</button>
+    <button class="opt" data-v="unknown">Not checked</button>
+  </div>
 </div>
 
-<div class="field"><label>Dealer notes</label><textarea id="dealerNotes"></textarea></div>
+<div class="question scoreQ" data-key="crash2025" data-label="Post-rebuild 2025 rear-end crash" data-weight="9" data-critical="yes">
+  <b>How is the April 25, 2025 rear-end crash record explained?</b>
+  <div class="why">This is the biggest new item from the second report because it is dated after the Michigan rebuild.</div>
+  <div class="opts">
+    <button class="opt" data-v="excellent">Documented data error / duplicate - strong proof</button>
+    <button class="opt" data-v="good">Very minor incident documented + repair evidence</button>
+    <button class="opt" data-v="mixed">Plausible explanation but limited documentation</button>
+    <button class="opt" data-v="concern">Dealer unaware / cannot explain</button>
+    <button class="opt" data-v="bad">Confirmed meaningful second rear-end collision / poor repair</button>
+    <button class="opt" data-v="unknown">Not asked / unresolved</button>
+  </div>
+</div>
+
+<div class="field"><label>Dealer notes</label><textarea id="dealerNotes" placeholder="Names, explanation, promises, anything that changes..."></textarea></div>
 <button class="btn primary next">Tesla status / in-car →</button>
 </div>
 </section>
-
 
 <section class="tab" id="incar">
 <div class="card">
@@ -226,132 +231,161 @@ Important: this is a Michigan legal/safety recertification process. It is NOT Te
 <div class="field">
 <label>VIN verification</label>
 <select id="vin" class="scored" data-label="VIN identity" data-weight="10" data-critical="yes">
-<option value="unknown">Not checked</option>
-<option value="excellent">VIN matches title/dashboard/software</option>
-<option value="concern">Display problem but physical VIN matches</option>
-<option value="bad">VIN mismatch</option>
+  <option value="unknown">Not checked</option>
+  <option value="excellent">VIN matches title / physical VIN / Software screen</option>
+  <option value="concern">Software display issue but physical VIN matches</option>
+  <option value="bad">VIN mismatch</option>
 </select>
 </div>
 
 <details open>
-<summary>Tesla Unsupported Vehicle status — know this before asking</summary>
+<summary>How to enter Service Mode</summary>
+<ol class="steps">
+  <li>Park the car.</li>
+  <li>Open <b>Controls → Software</b>.</li>
+  <li>Press and hold the large model-name / “MODEL” area for roughly two seconds, then release.</li>
+  <li>When the access box appears, type <b>service</b>.</li>
+  <li>Browse only. Don't trigger calibrations, component actuations, resets, or repair procedures.</li>
+</ol>
+</details>
+
+<details>
+<summary>Service History - use it to attack the mileage question</summary>
+<ol class="steps">
+  <li>In Service Mode, look for <b>Service History</b> if available.</li>
+  <li>Photograph entries showing <b>date + odometer</b>.</li>
+  <li>Pay attention to who entered the record (Tesla vs independent/unknown, if shown).</li>
+  <li>Any Tesla-origin mileage near 0-5k before/after the collision is useful corroboration.</li>
+  <li>Any service mileage remotely near 138k materially changes the case.</li>
+</ol>
+</details>
+
+<details>
+<summary>Unsupported Vehicle: what it means</summary>
 <div class="box">
-A Tesla that has been totaled or carries salvage/rebuilt title history can be classified by Tesla as an <b>Unsupported Vehicle</b>.<br><br>
-If classified Unsupported:<br>
-• Tesla limited warranties / extended service agreements are void.<br>
-• The Tesla mobile app can still work.<br>
-• Tesla may restrict high-voltage service.<br>
-• Tesla can require a paid High Voltage Safety Inspection before HV work.<br>
-• Only a Tesla Service Center performs Tesla's HV Safety Inspection.<br>
-• Passing that inspection does NOT restore warranty or remove Unsupported status.<br>
-• Fast charging may separately require Tesla's Fast Charging Safety Inspection.<br>
-• Passing a fast-charging inspection can restore DC fast charging, but the title/Unsupported status remains.
+A Tesla declared a total loss or carrying salvage/rebuilt history may be classified by Tesla as an <b>Unsupported Vehicle</b>.<br><br>
+When classified unsupported, Tesla says its limited warranties and extended service agreements are void. The mobile app can still work. Tesla may require a paid <b>High Voltage Safety Inspection</b> before Tesla performs HV-related work. Fast charging is disabled for an unsupported vehicle until it successfully passes Tesla's separate <b>Fast Charging Safety Inspection</b>.<br><br>
+Passing those inspections does <b>not</b> remove Unsupported Vehicle status or restore the warranty.
 </div>
 </details>
 
 <details>
-<summary>Enter Service Mode</summary>
-<ol class="steps">
-<li>Park the vehicle.</li>
-<li>Controls → Software.</li>
-<li>Press/hold the large MODEL/model-name area for about two seconds.</li>
-<li>Release when the access box appears.</li>
-<li>Enter <b>service</b>.</li>
-<li>Browse only. Don't run resets/calibrations/component tests.</li>
-</ol>
-</details>
-
-<details>
-<summary>Service History — mileage evidence</summary>
-<ol class="steps">
-<li>In Service Mode, open Service History if available.</li>
-<li>Look for date + odometer entries.</li>
-<li>Note whether the entry says Tesla, Independent Repairer or Unknown.</li>
-<li>Photograph anything that supports or contradicts the ~5k-mile story.</li>
-</ol>
+<summary>What can change after YOU buy it?</summary>
+<div class="info">
+Current functionality is not absolute proof that Tesla has already reconciled the rebuilt-title history.<br><br>
+A car could theoretically work normally today, then later have Tesla process title/history information during ownership transfer or a backend update. Therefore the app separates:<br><br>
+<b>1. Does Supercharging work today?</b><br>
+<b>2. Does Tesla appear to know the rebuilt history?</b><br>
+<b>3. Is there actual Tesla HV / Fast Charging Safety Inspection documentation?</b>
+</div>
 </details>
 
 <div class="question scoreQ" data-key="alerts" data-label="Tesla diagnostic alerts" data-weight="9" data-critical="yes">
-<b>Service Mode alerts</b>
-<div class="opts">
-<button class="opt" data-v="excellent">No meaningful active alerts</button>
-<button class="opt" data-v="good">Only benign/history alerts</button>
-<button class="opt" data-v="mixed">Minor active faults</button>
-<button class="opt" data-v="concern">Repeated charging/HVAC/camera faults</button>
-<button class="opt" data-v="bad">Battery / drive / restraint / serious fault</button>
-<button class="opt" data-v="unknown">Not checked</button>
-</div>
+  <b>Service Mode alerts</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">No meaningful active alerts</button>
+    <button class="opt" data-v="good">Only benign / old history alerts</button>
+    <button class="opt" data-v="mixed">Minor active faults needing explanation</button>
+    <button class="opt" data-v="concern">Repeated charging / HVAC / camera faults</button>
+    <button class="opt" data-v="bad">Battery / drive / restraint / serious fault</button>
+    <button class="opt" data-v="unknown">Not checked</button>
+  </div>
 </div>
 
 <div class="question scoreQ" data-key="serviceMileage" data-label="Tesla mileage corroboration" data-weight="10" data-critical="yes">
-<b>Does Tesla Service History corroborate low mileage?</b>
-<div class="opts">
-<button class="opt" data-v="excellent">Multiple Tesla-origin records support ~5k</button>
-<button class="opt" data-v="good">At least one strong low-mile record</button>
-<button class="opt" data-v="mixed">Nothing useful either way</button>
-<button class="opt" data-v="concern">Odd/inconsistent mileage entry</button>
-<button class="opt" data-v="bad">Clearly contradicts ~5k story</button>
-<button class="opt" data-v="unknown">Not checked</button>
+  <b>Does Tesla Service History corroborate the ~5k-mile story?</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">Multiple Tesla-origin records support low miles</button>
+    <button class="opt" data-v="good">At least one strong Tesla low-mileage record</button>
+    <button class="opt" data-v="mixed">Nothing useful either way</button>
+    <button class="opt" data-v="concern">Odd / inconsistent mileage record</button>
+    <button class="opt" data-v="bad">Record clearly supports much higher mileage</button>
+    <button class="opt" data-v="unknown">Not checked / unavailable</button>
+  </div>
 </div>
+
+<div class="question scoreQ" data-key="titleOdoStatus" data-label="Current title / odometer status" data-weight="9" data-critical="yes">
+  <b>What does the current Michigan title say about mileage?</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">Current title shows ~4,861 actual miles, no odometer brand</button>
+    <button class="opt" data-v="good">Current title low-mileage + no obvious discrepancy notation</button>
+    <button class="opt" data-v="mixed">Title shown but mileage status unclear</button>
+    <button class="opt" data-v="concern">Dealer won't show title / title mileage unclear</button>
+    <button class="opt" data-v="bad">Not Actual / discrepancy / higher mileage shown</button>
+    <button class="opt" data-v="unknown">Not checked</button>
+  </div>
 </div>
 
 <div class="question scoreQ" data-key="hvInspection" data-label="Tesla High Voltage Safety Inspection" data-weight="10" data-critical="yes">
-<b>Has Tesla performed the High Voltage Safety Inspection?</b>
-<div class="opts">
-<button class="opt" data-v="excellent">Passed — Tesla inspection result shown</button>
-<button class="opt" data-v="good">Dealer says passed + Tesla history corroborates</button>
-<button class="opt" data-v="mixed">Unknown/not performed but no HV faults</button>
-<button class="opt" data-v="concern">No evidence of inspection / HV service eligibility unclear</button>
-<button class="opt" data-v="bad">Failed / Tesla HV service restricted by safety finding</button>
-<button class="opt" data-v="unknown">Not checked</button>
-</div>
+  <b>Has Tesla performed the High Voltage Safety Inspection?</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">Passed - Tesla result/document shown</button>
+    <button class="opt" data-v="good">Tesla history strongly corroborates a pass</button>
+    <button class="opt" data-v="mixed">Unknown/not performed, but no HV faults observed</button>
+    <button class="opt" data-v="concern">No evidence / Tesla HV service eligibility unclear</button>
+    <button class="opt" data-v="bad">Failed / Tesla HV safety restriction documented</button>
+    <button class="opt" data-v="unknown">Not checked</button>
+  </div>
 </div>
 
 <div class="question scoreQ" data-key="fastCharge" data-label="Supercharging / fast charging status" data-weight="10" data-critical="yes">
-<b>Can DC fast charging / Supercharging be verified?</b>
-<div class="opts">
-<button class="opt" data-v="excellent">Tesla fast-charge inspection passed + Supercharging demonstrated</button>
-<button class="opt" data-v="good">Successfully Supercharged during/recently documented</button>
-<button class="opt" data-v="mixed">Dealer says it works but no demonstration</button>
-<button class="opt" data-v="concern">Status unknown / cannot verify</button>
-<button class="opt" data-v="bad">DC fast charging / Supercharging disabled</button>
-<button class="opt" data-v="unknown">Not checked</button>
-</div>
+  <b>Can DC fast charging / Supercharging be verified?</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">Fast Charging Safety Inspection passed + charge demonstrated</button>
+    <button class="opt" data-v="good">Successfully Supercharged today / recent proof</button>
+    <button class="opt" data-v="mixed">Dealer says it works but no demonstration</button>
+    <button class="opt" data-v="concern">Status unknown / cannot verify</button>
+    <button class="opt" data-v="bad">Fast charging disabled / fails</button>
+    <button class="opt" data-v="unknown">Not checked</button>
+  </div>
 </div>
 
-<div class="question scoreQ" data-key="appStatus" data-label="Tesla app/account access" data-weight="6">
-<b>Tesla app/account status</b>
-<div class="opts">
-<button class="opt" data-v="excellent">Dealer shows car in Tesla account + can add driver</button>
-<button class="opt" data-v="good">Tesla account/service connectivity clearly works</button>
-<button class="opt" data-v="mixed">Mobile access works but dealer ownership setup unclear</button>
-<button class="opt" data-v="concern">Dealer cannot demonstrate app/service access</button>
-<button class="opt" data-v="bad">Ownership/account transfer problem known</button>
-<button class="opt" data-v="unknown">Not checked</button>
+<div class="question scoreQ" data-key="postTransferRisk" data-label="Post-transfer Tesla status certainty" data-weight="9" data-critical="yes">
+  <b>How certain are we that Tesla already knows and processed the rebuilt history?</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">Tesla HV + Fast Charging inspection docs after rebuild</button>
+    <button class="opt" data-v="good">Clear post-rebuild Tesla records / prior Tesla account transfer</button>
+    <button class="opt" data-v="mixed">Tesla appears aware, exact inspection status unclear</button>
+    <button class="opt" data-v="concern">Works today but no proof Tesla knows title history</button>
+    <button class="opt" data-v="bad">Evidence Tesla has not yet processed rebuilt/title status</button>
+    <button class="opt" data-v="unknown">Cannot determine</button>
+  </div>
 </div>
+
+<div class="question scoreQ" data-key="appStatus" data-label="Tesla account / app status" data-weight="5">
+  <b>Tesla account / app status</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">Dealer shows vehicle in Tesla account + post-rebuild service access</button>
+    <button class="opt" data-v="good">Account/service connectivity clearly works</button>
+    <button class="opt" data-v="mixed">App access works, ownership history unclear</button>
+    <button class="opt" data-v="concern">Dealer cannot demonstrate account/service access</button>
+    <button class="opt" data-v="bad">Known ownership/account transfer problem</button>
+    <button class="opt" data-v="unknown">Not checked</button>
+  </div>
 </div>
 
 <div id="inChecks"></div>
+<div class="field"><label>Tesla / battery / Service Mode notes</label><textarea id="teslaNotes"></textarea></div>
 <button class="btn primary next">Test drive →</button>
 </div>
 </section>
 
-
 <section class="tab" id="drive">
 <div class="card">
 <h2>4. Test drive</h2>
+<p class="lead">Radio off initially. Rear geometry and chassis behavior matter much more than cosmetics.</p>
 <div id="driveChecks"></div>
 
 <div class="question scoreQ" data-key="overallDrive" data-label="Overall driving behavior" data-weight="9" data-critical="yes">
-<b>Overall driving impression</b>
-<div class="opts">
-<button class="opt" data-v="excellent">Feels nearly new / exceptionally tight</button>
-<button class="opt" data-v="good">Completely normal</button>
-<button class="opt" data-v="mixed">Minor normal noise only</button>
-<button class="opt" data-v="concern">Noticeable correctable issue</button>
-<button class="opt" data-v="bad">Pulling / vibration / instability</button>
-<button class="opt" data-v="unknown">Insufficient test</button>
-</div>
+  <b>Overall driving impression</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">Feels nearly new / exceptionally tight</button>
+    <button class="opt" data-v="good">Completely normal</button>
+    <button class="opt" data-v="mixed">Minor normal tire/road noise only</button>
+    <button class="opt" data-v="concern">Noticeable but possibly correctable issue</button>
+    <button class="opt" data-v="bad">Pulling / vibration / instability / major noise</button>
+    <button class="opt" data-v="unknown">Insufficient test</button>
+  </div>
 </div>
 
 <div class="field"><label>Drive notes</label><textarea id="driveNotes"></textarea></div>
@@ -359,10 +393,9 @@ If classified Unsupported:<br>
 </div>
 </section>
 
-
 <section class="tab" id="inspect">
 <div class="card">
-<h2>5. Physical inspection</h2>
+<h2>5. Physical inspection after drive</h2>
 <div id="inspectChecks"></div>
 <h3>Additional checks</h3>
 <div id="extraChecks"></div>
@@ -371,53 +404,54 @@ If classified Unsupported:<br>
 </div>
 </section>
 
-
 <section class="tab" id="questions">
 <div class="card">
-<h2>6. Evidence & questions</h2>
+<h2>6. Dealer questions & evidence</h2>
 
-<div class="script">Useful Tesla-specific sequence:
+<div class="script">Recommended sequence - don't fire these all at once:
 
-“Has Tesla itself inspected this car since it was rebuilt?”
+1. “Do you know exactly what was repaired after the original rear-end total loss?”
 
-“Do you have the Tesla High Voltage Safety Inspection result?”
+2. “Who did the repair, and do you have the repair invoices, parts list, or before/after documentation?”
 
-“Has Tesla performed a Fast Charging Safety Inspection?”
+3. “Since Michigan issued the rebuilt title, do you have the TR-13A/TR-13B inspection paperwork or the documents you received with the car?”
 
-“Can you show me that it currently Supercharges?”
+4. “This second history report shows another rear-end crash record dated April 25, 2025 - after the rebuilt title was issued. Do you know what that event was?”
 
-“Is the vehicle currently attached to a Tesla account?”
+5. “Both reports show the same strange 138,918-mile Michigan/NMVTIS entry in April 2024, but a later Michigan title goes back to 4,861 and NMVTIS does not carry an odometer-discrepancy brand. Do you know whether Michigan corrected a clerical entry? Do you have documentation?”
 
-“Has Tesla serviced it since the rebuild?”
+6. “Has Tesla itself inspected this vehicle since the rebuild?”
 
-Separately:
+7. “Do you have a Tesla High Voltage Safety Inspection result?”
 
-“Can I see the Michigan rebuilt-title paperwork — TR-13A/TR-13B or the records you received with the car?”</div>
+8. “Has Tesla performed the Fast Charging Safety Inspection, or can we demonstrate Supercharging?”
+
+9. “Has the car been transferred between Tesla accounts since the Michigan rebuilt title was issued?”</div>
 
 <div id="dealerQuestions"></div>
 
 <div class="question scoreQ" data-key="odoExplain" data-label="138,918-mile explanation" data-weight="10" data-critical="yes">
-<b>How well is the 138,918-mile record resolved?</b>
-<div class="opts">
-<button class="opt" data-v="excellent">Official Michigan correction / hard proof</button>
-<button class="opt" data-v="good">Strong corroborating records</button>
-<button class="opt" data-v="mixed">Plausible explanation but no proof</button>
-<button class="opt" data-v="concern">Weak / unresolved</button>
-<button class="opt" data-v="bad">Evidence supports higher mileage / contradiction</button>
-<button class="opt" data-v="unknown">Unknown</button>
-</div>
+  <b>How well is the 138,918-mile event resolved?</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">Official Michigan correction / hard documentation</button>
+    <button class="opt" data-v="good">Strong independent corroboration of low mileage</button>
+    <button class="opt" data-v="mixed">Plausible clerical-error explanation, no proof</button>
+    <button class="opt" data-v="concern">Weak / unresolved</button>
+    <button class="opt" data-v="bad">Evidence supports high mileage / rollback concern</button>
+    <button class="opt" data-v="unknown">Unknown</button>
+  </div>
 </div>
 
 <div class="question scoreQ" data-key="repairDocs" data-label="Repair documentation" data-weight="8">
-<b>Repair documentation</b>
-<div class="opts">
-<button class="opt" data-v="excellent">Invoices + parts + photos + rebuild paperwork</button>
-<button class="opt" data-v="good">Useful detailed repair records</button>
-<button class="opt" data-v="mixed">Some records, significant gaps</button>
-<button class="opt" data-v="concern">Mostly verbal</button>
-<button class="opt" data-v="bad">No records / conflicting story</button>
-<button class="opt" data-v="unknown">Unknown</button>
-</div>
+  <b>Repair documentation quality</b>
+  <div class="opts">
+    <button class="opt" data-v="excellent">Invoices + parts + photos + rebuild paperwork</button>
+    <button class="opt" data-v="good">Useful detailed repair records</button>
+    <button class="opt" data-v="mixed">Some records, meaningful gaps</button>
+    <button class="opt" data-v="concern">Mostly verbal</button>
+    <button class="opt" data-v="bad">No records / conflicting story</button>
+    <button class="opt" data-v="unknown">Unknown</button>
+  </div>
 </div>
 
 <h3>Mileage script</h3>
@@ -428,628 +462,627 @@ Separately:
 </section>
 
 
+<section class="tab" id="info">
+<div class="card">
+<h2>7. Backup / source material</h2>
+<p class="lead">Use this tab if the dealer is unfamiliar with rebuilt Teslas or skeptical about the Tesla-specific restrictions. These are manufacturer/state sources, not forum claims.</p>
+
+
+<h3>The two vehicle-history reports I'm carrying</h3>
+
+<div class="proof">
+<b>Report #1 — ClearVin Vehicle History Report</b>
+<small>
+Provider: <b>ClearVin</b>. ClearVin identifies itself as an approved consumer-access provider for the federal
+National Motor Vehicle Title Information System (NMVTIS). This report is not one single database dump:
+different sections identify different sources.<br><br>
+
+For this VIN, the ClearVin report specifically labels:<br>
+• <b>Title History — NMVTIS</b><br>
+• <b>Title Brands — NMVTIS</b><br>
+• <b>Insurance / Junk / Salvage — NMVTIS</b><br>
+• <b>Odometer information — ClearVin / USDOT</b>, with the 138,918-mile entry itself attributed to NMVTIS<br>
+• <b>Accident / Damage History — Salvage Auction</b><br>
+• <b>Sale History — ClearVin / Salvage Auction</b><br>
+• <b>Theft Records — NVS</b><br><br>
+
+So when I refer to the Ohio salvage brand, Michigan rebuilt brand, or Michigan title mileage entries,
+I am not relying merely on ClearVin's own opinion or its “D” rating. Those underlying title facts are
+identified in the report as <b>NMVTIS data</b>.
+</small>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://www.clearvin.com/">ClearVin</a>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://vehiclehistory.bja.ojp.gov/nmvtis_consumers">DOJ: What NMVTIS contains</a>
+</div>
+
+<div class="proof">
+<b>Report #2 — EpicVIN Vehicle History Report</b>
+<small>
+Provider: <b>EpicVIN</b>. The report itself states that EpicVIN is an <b>approved NMVTIS data provider</b>.
+It separates records by their underlying source rather than presenting all entries as “EpicVIN data.”<br><br>
+
+For this VIN, the report labels records from:<br>
+• <b>NMVTIS</b> — state title/registration events, salvage/rebuilt brands, junk/salvage records and odometer-brand checks<br>
+• <b>VINCHAIN</b> — dealer/listing history, auction/sale events and several crash-history entries<br><br>
+
+This is why the EpicVIN report is useful as a second report, but it is also why the repeated
+<b>138,918-mile April 2024 entry is NOT a second independent measurement</b>: EpicVIN and ClearVin both
+attribute that number to the same Michigan/NMVTIS title event.
+</small>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://vehiclehistory.bja.ojp.gov/nmvtis_vehiclehistory">DOJ NMVTIS consumer providers</a>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://vehiclehistory.bja.ojp.gov/nmvtis_consumers">DOJ: NMVTIS consumer guide</a>
+</div>
+
+<div class="info">
+<b>How authoritative is NMVTIS?</b><br><br>
+
+NMVTIS stands for the <b>National Motor Vehicle Title Information System</b>. It is a federally established
+vehicle-history system overseen by the U.S. Department of Justice. Its purpose is specifically to help
+prevent title fraud, title washing, stolen-vehicle retitling, and concealment of junk/salvage history.<br><br>
+
+The DOJ says NMVTIS combines information from sources including <b>state motor-vehicle titling agencies,
+junk and salvage yards, automobile recyclers, and insurance carriers</b>. Consumer reports can show current
+title information, state title-brand history such as salvage/rebuilt/flood, latest reported odometer readings,
+insurance salvage/total-loss determinations, and junk/salvage transfers.<br><br>
+
+For <b>title brands and state title events</b>, this is much stronger evidence than a dealer listing, free VIN
+checker, or generic web search. A state brand entered into NMVTIS becomes part of the vehicle's NMVTIS history.
+</div>
+
+<div class="box">
+<b>Important limitation — don't oversell the reports:</b><br><br>
+
+NMVTIS is authoritative for the records it actually receives, but the DOJ itself says it is intentionally
+a concise system and is <b>not a complete mechanical, accident, service, or repair history</b>. A missing event
+does not prove that nothing happened. State practices also differ.<br><br>
+
+Likewise, ClearVin's “D / Bad” score and EpicVIN's calculated mileage projections are <b>commercial analysis</b>,
+not government findings. The government-backed facts are the individual records they explicitly identify as
+NMVTIS-sourced.<br><br>
+
+My position with the dealer is therefore:
+<b>“I'm not asking you to accept ClearVin's or EpicVIN's opinion. I'm asking about the underlying Ohio and Michigan
+title records that both reports identify as NMVTIS records.”</b>
+</div>
+
+<div class="script">QUICK VERSION IF THE DEALER QUESTIONS THE REPORTS:
+
+“I brought two different paid history reports. One is ClearVin and one is EpicVIN. Both are consumer vehicle-history
+services that access NMVTIS data. NMVTIS is the federal title-history system overseen by the U.S. Department of Justice
+and receives information from state title agencies, insurers and junk/salvage businesses.
+
+I'm not treating every prediction or score in these reports as gospel. But the Ohio salvage title, Michigan rebuilt
+brand and the Michigan title-mileage entries are specifically marked as NMVTIS records in both reports.
+
+The weird 138,918-mile number is also the SAME NMVTIS record appearing in both reports — not two separate odometer
+readings — which is why I'm asking you to help me reconcile it rather than accusing anyone of rolling the car back.”</div>
+
+<h3>What the two reports independently add</h3>
+
+<div class="proof">
+<b>Strongest overlapping evidence</b>
+<small>
+Both reports support the same core title chronology: approximately 15 miles on the original Ohio title,
+4,861 miles around the 2023 salvage event, an Ohio salvage brand, a Michigan rebuilt brand in 2024,
+the anomalous 138,918-mile Michigan/NMVTIS title entry, and a later Michigan title returning to 4,861 miles.
+</small>
+</div>
+
+<div class="proof">
+<b>ClearVin's useful extra evidence</b>
+<small>
+The ClearVin report includes the salvage-auction record and auction-derived damage information:
+Copart, Ohio salvage document, 4,861 miles, Run & Drive, rear-end primary damage, $18,900 sale price,
+$42,890 ACV and a $34,491 repair estimate. It also carries the archived auction-photo evidence.
+</small>
+</div>
+
+<div class="proof">
+<b>EpicVIN's useful extra evidence</b>
+<small>
+EpicVIN explicitly shows that the NMVTIS odometer-brand checks report no “Not Actual,” tampering,
+“May Be Altered,” replaced, or odometer-discrepancy problem. It also exposes VINCHAIN events not prominent
+in the first report, including the August 2022 crash record and the April 25, 2025 rear-end crash record.
+That 2025 event is why I need a separate explanation of anything that happened after the original rebuild.
+</small>
+</div>
+
+
+<h3>Tesla Unsupported Vehicle policy</h3>
+
+<div class="proof">
+<b>Why this vehicle can fall under the policy</b>
+<small>Tesla's current Unsupported Vehicle Policy says factors include a vehicle being declared a total loss, salvage-titled, rebuilt-titled, or junk-titled. Tesla says it can use government agencies, insurers, Tesla centers, independent vehicle-history agencies, internet forums, and auction sites to determine whether a vehicle has been or should be classified as unsupported.</small>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://service.tesla.com/docs/ServiceBulletins/External/TN/TN-18-00-001_Unsupported_Vehicle_Policy_R5.pdf">Tesla policy PDF</a>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://www.tesla.com/en_ph/legal/additional-resources">Tesla legal summary</a>
+</div>
+
+<div class="proof">
+<b>Warranty consequence</b>
+<small>Tesla states that when a vehicle is classified as unsupported, Tesla limited warranties and extended service agreements are void. Passing later safety inspections does not restore those warranties.</small>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://service.tesla.com/docs/ServiceBulletins/External/TN/TN-18-00-001_Unsupported_Vehicle_Policy_R5.pdf">Tesla policy PDF</a>
+</div>
+
+<div class="proof">
+<b>High-voltage service restriction</b>
+<small>Tesla says only Tesla Service Centers may perform the High Voltage Safety Inspection. If an unsupported vehicle has not passed it, Tesla Service Centers and Tesla Approved Collision Centers may not perform HV-system maintenance/service or the Fast Charging Safety Inspection. After passing, the car still remains an Unsupported Vehicle.</small>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://service.tesla.com/docs/ServiceBulletins/External/TN/TN-18-00-001_Unsupported_Vehicle_Policy_R5.pdf">Tesla policy PDF</a>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://service.tesla.com/docs/ServiceBulletins/External/CD/CD-21-00-001_Authorization_and_Release_for_Inspection_of_Unsupported_Vehicle_R1.pdf">Tesla HV inspection authorization</a>
+</div>
+
+<div class="proof">
+<b>Fast charging / Supercharging restriction</b>
+<small>Tesla's policy says fast charging through Tesla Superchargers or third-party DC fast chargers remains disabled on an unsupported vehicle until it successfully passes Tesla's Fast Charging Safety Inspection. That inspection must occur at a Tesla Service Center, at customer expense, and cannot begin until the High Voltage Safety Inspection has passed. Even after fast charging is restored, the vehicle remains unsupported.</small>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://service.tesla.com/docs/ServiceBulletins/External/TN/TN-18-00-001_Unsupported_Vehicle_Policy_R5.pdf">Tesla policy PDF - see Fast Charging section</a>
+</div>
+
+<div class="proof">
+<b>App access does NOT prove supported status</b>
+<small>Tesla explicitly says mobile-app usage remains supported for unsupported vehicles. So seeing the car in the Tesla app is useful ownership evidence, but it does not prove the vehicle is fully supported or eligible for HV service / DC fast charging.</small>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://service.tesla.com/docs/ServiceBulletins/External/TN/TN-18-00-001_Unsupported_Vehicle_Policy_R5.pdf">Tesla policy PDF</a>
+</div>
+
+<div class="box">
+<b>Important nuance for the conversation:</b><br>
+Do not tell the dealer “this car definitely cannot Supercharge.” That is too strong before checking the VIN's actual Tesla status.<br><br>
+The accurate statement is: <b>because it is rebuilt/total-loss, Tesla's policy can classify it as Unsupported; if it is unsupported, fast charging is disabled unless the Tesla HV and Fast Charging Safety Inspection process has been successfully completed.</b>
+</div>
+
+<h3>What I want the dealer to prove</h3>
+<div class="script">If they know Tesla rebuilt vehicles well:
+“Great — can you show me the Tesla High Voltage Safety Inspection result, the Fast Charging Safety Inspection result, or a successful recent Supercharge?”
+
+If they are unfamiliar / skeptical:
+“I’m not saying the car is definitely blocked today. Tesla’s own policy says rebuilt or total-loss cars can be classified as Unsupported, and unsupported cars have HV-service and fast-charging restrictions until Tesla’s inspection process is completed. I just need to know which state this VIN is actually in.”
+
+Then ask:
+• Has Tesla interacted with the VIN after the rebuild?
+• Is there a High Voltage Safety Inspection result?
+• Is there a Fast Charging Safety Inspection result?
+• Can we demonstrate a Supercharge?
+• Has the car been through a Tesla-account ownership transfer after the Michigan rebuilt title?
+• Will you put in writing that DC fast charging currently works, if you are representing that it does?</div>
+
+<h3>Michigan rebuilt-title process</h3>
+
+<div class="proof">
+<b>Michigan rebuilt is a real state recertification process</b>
+<small>Michigan says a salvage vehicle cannot return to public-road use until it is repaired, passes inspection by a specially trained law-enforcement salvage vehicle inspector, and is retitled. TR-13A is completed with a licensed mechanic; the inspector reviews the salvage title and receipts for major parts and completes TR-13B if it passes. The new title is branded REBUILT SALVAGE.</small>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://www.michigan.gov/sos/vehicle/titles">Michigan SOS - Titles</a>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://www.michigan.gov/sos/-/media/Project/Websites/sos/Vehicle/Salvage-Vehicle/tr13a.pdf">Michigan TR-13A</a>
+</div>
+
+<div class="proof">
+<b>What the state inspection does and does not establish</b>
+<small>The Michigan inspector checks VIN/parts identification, ownership of repair parts, compliance with Michigan equipment/safety requirements, and that repairs were certified as workmanlike by the appropriate mechanic. That is important evidence, but it is separate from Tesla's HV / fast-charging safety process.</small>
+<a class="sourceLink" target="_blank" rel="noopener" href="https://www.michigan.gov/sos/-/media/Project/Websites/sos/01preston/Dealer_Manual_Chapter_5.pdf">Michigan dealer manual - rebuilt salvage</a>
+</div>
+
+<h3>Mileage backup</h3>
+<div class="info">
+Both paid reports reproduce the same April 2024 Michigan/NMVTIS 138,918-mile title record; that is not two independent mileage measurements. The second report also says NMVTIS shows no “Not Actual,” tampering, altered, replaced, or odometer-discrepancy brand, and later shows a Michigan title at 4,861 miles. This supports treating a clerical/title-entry error as plausible, but it does not prove one. Current title, Tesla service-history mileage, and Michigan correction records are still the best evidence.
+</div>
+
+<h3>What I should leave with</h3>
+<div class="script">Best-case evidence package:
+✓ Current Michigan REBUILT SALVAGE title
+✓ Current physical odometer photo
+✓ Tesla Software-screen VIN photo
+✓ Tesla Service History screenshots with dates/mileage
+✓ TR-13A/TR-13B or related rebuild paperwork if available
+✓ Repair invoices / parts receipts / shop identity
+✓ Explanation/documentation for April 2025 rear-end record
+✓ Tesla High Voltage Safety Inspection result, if performed
+✓ Tesla Fast Charging Safety Inspection result, if performed
+✓ Demonstrated Supercharging / DC fast charging
+✓ Dealer written representation of any charging or Tesla-status claim they make</div>
+
+<button class="btn primary next">Conclusion →</button>
+</div>
+</section>
+
 <section class="tab" id="conclusion">
 <div class="card">
-<h2>7. Conclusion</h2>
-
+<h2>8. Weighted conclusion</h2>
 <div class="result">
-<div id="ring" class="ring"><span id="score">—</span></div>
-<div>
-<div id="verdict" class="verdict">Not enough information</div>
-<div id="verdictText" class="lead">Unknown answers don't count against the car.</div>
-<div id="coverage" class="sub"></div>
+  <div id="ring" class="ring"><span id="score">—</span></div>
+  <div>
+    <div id="verdict" class="verdict">Not enough information</div>
+    <div id="verdictText" class="lead">Unknown answers don't count against the car.</div>
+    <div id="coverage" class="sub"></div>
+  </div>
 </div>
-</div>
 
-<h3>Positive evidence</h3>
-<div id="positives"></div>
-
-<h3>Concerns</h3>
-<div id="concerns"></div>
-
-<h3>Critical findings</h3>
-<div id="critical"></div>
+<h3>Positive evidence</h3><div id="positives"></div>
+<h3>Concerns</h3><div id="concerns"></div>
+<h3>Critical findings</h3><div id="critical"></div>
 
 <button class="btn primary next">Valuation & negotiation →</button>
 </div>
 </section>
 
-
 <section class="tab" id="negotiate">
 <div class="card">
-
-<h2>8. Live valuation & negotiation</h2>
+<h2>9. Live valuation & negotiation</h2>
 
 <div class="values">
-<div class="valueCard hero">
-<small>KBB CLEAN-TITLE DEALER BENCHMARK</small>
-<div class="money">$23,200</div>
-<small>Reference baseline, not this rebuilt car's value</small>
+  <div class="valueCard hero"><small>KBB CLEAN-TITLE DEALER BENCHMARK</small><div class="money">$23,200</div><small>National good-condition / typical-mileage benchmark</small></div>
+  <div class="valueCard"><small>KBB CLEAN PRIVATE PARTY</small><div class="money">$21,400</div></div>
+  <div class="valueCard buy"><small>APP ESTIMATED REBUILT FAIR VALUE</small><div class="money" id="fairValue">—</div><small id="fairDiscount"></small></div>
+  <div class="valueCard buy"><small>RECOMMENDED PURCHASE TARGET</small><div class="money" id="targetValue">—</div></div>
+  <div class="valueCard warn"><small>RECOMMENDED OPENING OFFER</small><div class="money" id="recommendedOpen">—</div></div>
+  <div class="valueCard warn"><small>RECOMMENDED WALK-AWAY</small><div class="money" id="recommendedCeiling">—</div></div>
 </div>
 
-<div class="valueCard">
-<small>KBB CLEAN PRIVATE PARTY</small>
-<div class="money">$21,400</div>
+<h3>Valuation logic</h3><div id="valuationMath"></div>
+
+<div class="info">
+This is a decision model, not an official KBB rebuilt-title appraisal. It anchors to the clean-title KBB benchmark, then applies a permanent rebuilt/total-loss discount plus evidence-specific adjustments for structural condition, mileage confidence, Tesla HV/charging status, the reported 2025 rear-end event, insurance, and documentation.
 </div>
 
-<div class="valueCard buy">
-<small>APP ESTIMATED REBUILT FAIR VALUE</small>
-<div class="money" id="fairValue">—</div>
-<small id="fairDiscount"></small>
-</div>
+<h3>Recommendation right now</h3><div id="negRecommendation" class="box"></div>
 
-<div class="valueCard buy">
-<small>RECOMMENDED PURCHASE TARGET</small>
-<div class="money" id="targetValue">—</div>
-</div>
+<h3>Suggested negotiation script</h3><div id="negScript" class="script"></div>
 
-<div class="valueCard warn">
-<small>RECOMMENDED OPENING OFFER</small>
-<div class="money" id="recommendedOpen">—</div>
-</div>
-
-<div class="valueCard warn">
-<small>RECOMMENDED WALK-AWAY</small>
-<div class="money" id="recommendedCeiling">—</div>
-</div>
-</div>
-
-<h3>Valuation logic</h3>
-<div id="valuationMath"></div>
-
-<div id="negRecommendation" class="box"></div>
-
-<h3>Suggested script</h3>
-<div id="negScript" class="script"></div>
-
-<div class="field">
-<label>Dealer counter</label>
-<input id="counter" type="number" placeholder="Enter their number">
-</div>
-
+<div class="field"><label>Dealer counter</label><input id="counter" type="number" placeholder="Enter their number"></div>
 <div id="counterAdvice" class="box">Enter a counter for live guidance.</div>
 
-<h3>Leverage</h3>
-<div id="leverage"></div>
-
+<h3>Your leverage</h3><div id="leverage"></div>
 </div>
 </section>
 
-
 <div class="sticky">
-<button id="back" class="btn">← Back</button>
-<button id="export" class="btn">Export</button>
-<button id="reset" class="btn danger">Reset</button>
+  <button id="back" class="btn">← Back</button>
+  <button id="export" class="btn">Export</button>
+  <button id="reset" class="btn danger">Reset</button>
 </div>
 
 </div>
-
 
 <script>
-
-const tabs=['research','dealer','incar','drive','inspect','questions','conclusion','negotiate'];
-const names=['Research','Dealer','Tesla','Drive','Inspect','Questions','Conclusion','Negotiate'];
-
-const SCALE={excellent:1,good:.7,mixed:.2,concern:-.35,bad:-1,unknown:null};
-
+const tabs=['research','dealer','incar','drive','inspect','questions','info','conclusion','negotiate'];
+const names=['Research','Dealer','Tesla','Drive','Inspect','Questions','Backup','Conclusion','Negotiate'];
+const SCALE={excellent:1,good:.70,mixed:.20,concern:-.35,bad:-1,unknown:null};
 const CLEAN_KBB=23200;
 
-let S=JSON.parse(localStorage.getItem('teslaPlaybookV6')||'{}');
-S.a=S.a||{};
-S.f=S.f||{};
-S.tab=S.tab||'research';
+let S=JSON.parse(localStorage.getItem('teslaPlaybookV7')||'{}');
+S.a=S.a||{}; S.f=S.f||{}; S.tab=S.tab||'research';
 
 const $=id=>document.getElementById(id);
-const save=()=>localStorage.setItem('teslaPlaybookV6',JSON.stringify(S));
+const save=()=>localStorage.setItem('teslaPlaybookV7',JSON.stringify(S));
 
 const defs={
-
 incar:[
-{k:'cameras',l:'Rear + side repeater cameras function',w:4},
-{k:'trunk',l:'Trunk opens/closes/latches normally',w:5},
-{k:'chargePort',l:'Charge port functions normally',w:5},
-{k:'hvac',l:'Heat and A/C work properly',w:3},
-{k:'electronics',l:'Screen/windows/doors/electronics normal',w:2}
+  {k:'cameras',l:'Rear + side repeater cameras function',w:4,why:'Check especially because auction photos made the repeater area look odd.'},
+  {k:'trunk',l:'Trunk opens/closes/latches normally',w:5,why:'Primary collision area.'},
+  {k:'chargePort',l:'Charge port functions normally',w:5,why:'Look for errors or abnormal behavior.'},
+  {k:'hvac',l:'Heat and A/C work properly',w:3,why:'Heat-pump/HVAC repair can be expensive.'},
+  {k:'electronics',l:'Screen/windows/doors/electronics normal',w:2,why:'Basic functional check.'}
 ],
-
 drive:[
-{k:'turnNoise',l:'No clunks/clicks in tight turns',w:4},
-{k:'bumps',l:'No abnormal rear clunks over bumps',w:5},
-{k:'tracking',l:'Tracks straight on flat road',w:9,c:true},
-{k:'braking',l:'Brakes straight and stable',w:9,c:true},
-{k:'highway',l:'No highway-speed vibration',w:7},
-{k:'accel',l:'Acceleration smooth and uninterrupted',w:5},
-{k:'symmetry',l:'Left/right steering response symmetrical',w:9,c:true}
+  {k:'turnNoise',l:'No clunks/clicks in tight turns',w:4,why:'Suspension/axle/body clue.'},
+  {k:'bumps',l:'No abnormal rear clunks over bumps',w:5,why:'Listen especially behind you.'},
+  {k:'tracking',l:'Tracks straight on flat road',w:9,c:true,why:'Major geometry/alignment evidence.'},
+  {k:'braking',l:'Brakes straight and stable',w:9,c:true,why:'No pull or rear-steer under braking.'},
+  {k:'highway',l:'No highway-speed vibration',w:7,why:'Wheel/alignment/structural clue.'},
+  {k:'accel',l:'Acceleration smooth and uninterrupted',w:5,why:'Drivetrain behavior.'},
+  {k:'symmetry',l:'Left/right steering response symmetrical',w:9,c:true,why:'Useful chassis/rear geometry test.'}
 ],
-
 inspect:[
-{k:'gaps',l:'Rear panel gaps reasonably symmetrical',w:3},
-{k:'seams',l:'Trunk/rear welds and seam sealer look competent',w:9,c:true},
-{k:'rearStructure',l:'Rear underside straight/symmetrical',w:10,c:true},
-{k:'batteryCase',l:'Battery enclosure has no serious damage',w:10,c:true},
-{k:'tireWear',l:'Tire wear even, especially rear',w:6},
-{k:'water',l:'No trunk moisture/water intrusion',w:5},
-{k:'paint',l:'Paint/body repair workmanship looks good',w:2}
+  {k:'gaps',l:'Rear panel gaps reasonably symmetrical',w:3,why:'Compare trunk, taillights, quarters and bumper.'},
+  {k:'seams',l:'Trunk/rear welds and seam sealer look competent',w:9,c:true,why:'Major DIY repair-quality clue.'},
+  {k:'rearStructure',l:'Rear underside straight/symmetrical',w:10,c:true,why:'Look for distortion, crude welds or crushed seams.'},
+  {k:'batteryCase',l:'Battery enclosure has no serious damage',w:10,c:true,why:'Highest-consequence EV inspection item.'},
+  {k:'tireWear',l:'Tire wear even, especially rear',w:6,why:'Geometry clue.'},
+  {k:'water',l:'No trunk moisture/water intrusion',w:5,why:'Rear repair sealing clue.'},
+  {k:'paint',l:'Paint/body repair workmanship looks good',w:2,why:'Useful, but lower importance than structure.'},
+  {k:'rearFreshDamage',l:'No evidence of a newer/post-rebuild rear repair',w:8,c:true,why:'Specifically checks the 2025 rear-end record.'}
 ],
-
 extra:[
-{k:'suspension',l:'Suspension visually symmetrical',w:5},
-{k:'front',l:'Frunk/front structure looks normal',w:3},
-{k:'glass',l:'Roof/glass/weather seals normal',w:2}
+  {k:'suspension',l:'Suspension visually symmetrical',w:5,why:'Compare side-to-side.'},
+  {k:'front',l:'Frunk/front structure looks normal',w:3,why:'Checks the odd front-area auction appearance.'},
+  {k:'glass',l:'Roof/glass/weather seals normal',w:2,why:'Leaks and wind noise.'},
+  {k:'tireDates',l:'Tire DOT dates / wear make sense for claimed mileage',w:4,why:'Circumstantial mileage evidence.'}
 ]
-
 };
 
 const dealerQs=[
-{k:'parts',l:'Repair parts/history known',w:6},
-{k:'structureHistory',l:'Structural repair history',w:9,c:true},
-{k:'suspensionHistory',l:'Rear suspension/subframe history',w:8,c:true},
-{k:'batteryHistory',l:'HV battery impact history',w:10,c:true},
-{k:'airbags',l:'Airbag/restraint repair history',w:9,c:true}
+  {k:'parts',l:'Original repair parts/history known',w:6},
+  {k:'structureHistory',l:'Structural repair history',w:9,c:true},
+  {k:'suspensionHistory',l:'Rear suspension/subframe history',w:8,c:true},
+  {k:'batteryHistory',l:'HV battery impact history',w:10,c:true},
+  {k:'airbags',l:'Airbag/restraint repair history',w:9,c:true},
+  {k:'repairer',l:'Repair shop / rebuilder identified',w:5},
+  {k:'saleHistory',l:'Dealer explains years-long listing / no added miles',w:4}
 ];
 
-function nav(){
-tabs.forEach((t,i)=>{
-const b=document.createElement('button');
-b.textContent=(i+1)+'. '+names[i];
-b.onclick=()=>show(t);
-$('nav').appendChild(b);
-});
+function makeNav(){
+  tabs.forEach((t,i)=>{
+    const b=document.createElement('button');
+    b.textContent=(i+1)+'. '+names[i];
+    b.onclick=()=>show(t);
+    $('nav').appendChild(b);
+  });
 }
 
 function show(t){
-tabs.forEach(x=>$(x).classList.toggle('active',x===t));
-[...$('nav').children].forEach((b,i)=>b.classList.toggle('on',tabs[i]===t));
-S.tab=t;save();
-$('prog').style.width=((tabs.indexOf(t)+1)/tabs.length*100)+'%';
-$('back').disabled=t==='research';
-window.scrollTo(0,0);
-calc();
+  tabs.forEach(x=>$(x).classList.toggle('active',x===t));
+  [...$('nav').children].forEach((b,i)=>b.classList.toggle('on',tabs[i]===t));
+  S.tab=t;save();
+  $('prog').style.width=((tabs.indexOf(t)+1)/tabs.length*100)+'%';
+  $('back').disabled=t==='research';
+  window.scrollTo(0,0);
+  calc();
 }
 
-function css(v){
-return ['excellent','good','mixed','concern','bad'].includes(v)?v:'';
-}
-
-function choices(){
-return [
-['excellent','Excellent'],
-['good','Good'],
-['mixed','Mixed'],
-['concern','Concern'],
-['bad','Bad'],
-['unknown','Not checked']
-];
-}
+function css(v){return ['excellent','good','mixed','concern','bad'].includes(v)?v:'';}
+function choices(){return [['excellent','Excellent'],['good','Good'],['mixed','Mixed'],['concern','Concern'],['bad','Bad'],['unknown','Not checked']];}
 
 function renderChecks(rootId,arr){
-const root=$(rootId);
-root.innerHTML='';
-
-arr.forEach(x=>{
-const now=S.a[x.k]||'unknown';
-
-const d=document.createElement('div');
-d.className='check';
-d.innerHTML=`
-<div class="checktop">
-<div>
-<b>${x.l}</b>
-${x.c?'<div class="critical">HIGH IMPORTANCE</div>':''}
-</div>
-<span class="weight">weight ${x.w}</span>
-</div>
-<div class="opts">
-${choices().map(([v,l])=>`<button class="opt ${now===v?css(v):''}" data-v="${v}">${l}</button>`).join('')}
-</div>`;
-
-d.querySelectorAll('.opt').forEach(b=>{
-b.onclick=()=>{
-S.a[x.k]=b.dataset.v;
-save();
-renderChecks(rootId,arr);
-calc();
-};
-});
-
-root.appendChild(d);
-});
+  const root=$(rootId); root.innerHTML='';
+  arr.forEach(x=>{
+    const now=S.a[x.k]||'unknown';
+    const d=document.createElement('div');
+    d.className='check';
+    d.innerHTML=`
+      <div class="checktop">
+        <div><b>${x.l}</b><div class="why">${x.why||''}</div>${x.c?'<div class="critical">HIGH IMPORTANCE</div>':''}</div>
+        <span class="weight">weight ${x.w}</span>
+      </div>
+      <div class="opts">
+        ${choices().map(([v,l])=>`<button class="opt ${now===v?css(v):''}" data-v="${v}">${l}</button>`).join('')}
+      </div>`;
+    d.querySelectorAll('.opt').forEach(b=>{
+      b.onclick=()=>{S.a[x.k]=b.dataset.v;save();renderChecks(rootId,arr);calc();};
+    });
+    root.appendChild(d);
+  });
 }
 
 function renderDealerQs(){
-const root=$('dealerQuestions');
-root.innerHTML='';
-
-dealerQs.forEach(x=>{
-const now=S.a[x.k]||'unknown';
-
-const d=document.createElement('div');
-d.className='question';
-
-d.innerHTML=`
-<div class="checktop">
-<div>
-<b>${x.l}</b>
-${x.c?'<div class="critical">HIGH IMPORTANCE</div>':''}
-</div>
-<span class="weight">weight ${x.w}</span>
-</div>
-<div class="opts">
-${choices().map(([v,l])=>`<button class="opt ${now===v?css(v):''}" data-v="${v}">${l}</button>`).join('')}
-</div>`;
-
-d.querySelectorAll('.opt').forEach(b=>{
-b.onclick=()=>{
-S.a[x.k]=b.dataset.v;
-save();
-renderDealerQs();
-calc();
-};
-});
-
-root.appendChild(d);
-});
+  const root=$('dealerQuestions'); root.innerHTML='';
+  dealerQs.forEach(x=>{
+    const now=S.a[x.k]||'unknown';
+    const d=document.createElement('div');
+    d.className='question';
+    d.innerHTML=`
+      <div class="checktop">
+        <div><b>${x.l}</b>${x.c?'<div class="critical">HIGH IMPORTANCE</div>':''}</div>
+        <span class="weight">weight ${x.w}</span>
+      </div>
+      <div class="opts">
+        ${choices().map(([v,l])=>`<button class="opt ${now===v?css(v):''}" data-v="${v}">${l}</button>`).join('')}
+      </div>`;
+    d.querySelectorAll('.opt').forEach(b=>{
+      b.onclick=()=>{S.a[x.k]=b.dataset.v;save();renderDealerQs();calc();};
+    });
+    root.appendChild(d);
+  });
 }
 
 function setupScoreQs(){
-document.querySelectorAll('.scoreQ').forEach(q=>{
-q.querySelectorAll('.opt').forEach(b=>{
-b.onclick=()=>{
-S.a[q.dataset.key]=b.dataset.v;
-save();
-paintScoreQs();
-calc();
-};
-});
-});
-paintScoreQs();
+  document.querySelectorAll('.scoreQ').forEach(q=>{
+    q.querySelectorAll('.opt').forEach(b=>{
+      b.onclick=()=>{S.a[q.dataset.key]=b.dataset.v;save();paintScoreQs();calc();};
+    });
+  });
+  paintScoreQs();
 }
-
 function paintScoreQs(){
-document.querySelectorAll('.scoreQ').forEach(q=>{
-const v=S.a[q.dataset.key];
-q.querySelectorAll('.opt').forEach(b=>{
-b.className='opt';
-if(b.dataset.v===v)b.classList.add(css(v));
-});
-});
+  document.querySelectorAll('.scoreQ').forEach(q=>{
+    const v=S.a[q.dataset.key];
+    q.querySelectorAll('.opt').forEach(b=>{b.className='opt';if(b.dataset.v===v)b.classList.add(css(v));});
+  });
 }
 
 function bind(){
-document.querySelectorAll('input,select,textarea').forEach(e=>{
-if(S.f[e.id]!==undefined)e.value=S.f[e.id];
-else if(e.value)S.f[e.id]=e.value;
-
-const h=()=>{
-S.f[e.id]=e.value;
-save();
-calc();
-};
-
-e.oninput=h;
-e.onchange=h;
-});
+  document.querySelectorAll('input,select,textarea').forEach(e=>{
+    if(S.f[e.id]!==undefined)e.value=S.f[e.id];
+    else if(e.value)S.f[e.id]=e.value;
+    const h=()=>{S.f[e.id]=e.value;save();calc();};
+    e.oninput=h;e.onchange=h;
+  });
 }
 
 function odometer(){
-const v=Number(S.f.odo||0);
+  const v=Number(S.f.odo||0);
+  $('askDisplay').textContent='$'+Number(S.f.ask||19992).toLocaleString();
 
-if(!v){
-$('odoBox').className='box';
-$('odoBox').textContent='Enter the physical odometer on the Research tab.';
-$('mileScript').textContent='Enter physical mileage first.';
-return;
-}
-
-if(v===4861){
-$('odoBox').className='box';
-$('odoBox').textContent='Exactly 4,861 is possible, but remarkably exact after repair, inspection and dealer movement.';
-$('mileScript').textContent='“Copart recorded exactly 4,861 miles in March 2023 and it still shows exactly 4,861. How did transport, repair, rebuilt inspection and dealership handling add no mileage?”';
-}
-else if(v>4861&&v<=5500){
-$('odoBox').className='box good';
-$('odoBox').textContent=v.toLocaleString()+' miles fits very well with the 2023 auction reading plus limited post-repair/test-drive use.';
-$('mileScript').textContent='“The physical mileage fits the Copart record well. What I need explained is the April 2024 NMVTIS record at 138,918 miles. Was that formally corrected?”';
-}
-else if(v>=100000){
-$('odoBox').className='box bad';
-$('odoBox').textContent='This materially supports the possibility that the 138,918-mile record was real.';
-$('mileScript').textContent='“The physical mileage is dramatically different from the advertised mileage. I need the odometer/title history resolved before proceeding.”';
-}
-else{
-$('odoBox').className='box';
-$('odoBox').textContent=v.toLocaleString()+' miles needs to be reconciled with the repeated 4,861-mile listings.';
-$('mileScript').textContent='“Can you reconcile the current mileage, repeated 4,861-mile listings and the 138,918-mile NMVTIS record?”';
-}
+  if(!v){
+    $('odoBox').className='box';$('odoBox').textContent='Enter the physical odometer on the Research tab.';
+    $('mileScript').textContent='Enter physical mileage first.';return;
+  }
+  if(v===4861){
+    $('odoBox').className='box';
+    $('odoBox').textContent='Exactly 4,861 is possible, but remarkably exact after repair, rebuild inspection and dealer handling.';
+    $('mileScript').textContent='“Copart recorded exactly 4,861 miles in March 2023, and the current car still shows exactly 4,861. How was it repaired, inspected, transported and handled for years without adding mileage? Also, can I see the current Michigan title and any mileage-correction paperwork?”';
+  } else if(v>4861&&v<=5500){
+    $('odoBox').className='box good';
+    $('odoBox').textContent=v.toLocaleString()+' miles fits very well with the 2023 auction reading plus limited post-repair/test-drive use.';
+    $('mileScript').textContent='“The physical mileage fits the Copart 4,861-mile record well. Both reports are repeating the same April 2024 NMVTIS entry at 138,918 miles, while the later Michigan title returns to 4,861 and NMVTIS does not show an odometer-discrepancy brand. Was that an administrative error, and is there documentation of the correction?”';
+  } else if(v>=100000){
+    $('odoBox').className='box bad';
+    $('odoBox').textContent='This materially supports the possibility that the 138,918-mile record was real. Treat the low-mileage premise as unproven.';
+    $('mileScript').textContent='“The physical mileage is dramatically different from the advertised mileage. I need the odometer/title history resolved before going further.”';
+  } else {
+    $('odoBox').className='box';
+    $('odoBox').textContent=v.toLocaleString()+' miles needs to be reconciled with repeated 4,861-mile dealer listings.';
+    $('mileScript').textContent='“Can you reconcile the physical odometer, the repeated 4,861-mile listings, the April 2024 138,918-mile NMVTIS title entry, and the later Michigan title returning to 4,861?”';
+  }
 }
 
 function allItems(){
-let arr=[];
-
-Object.values(defs).flat().forEach(x=>{
-arr.push({l:x.l,w:x.w,c:!!x.c,v:S.a[x.k]||'unknown'});
-});
-
-dealerQs.forEach(x=>{
-arr.push({l:x.l,w:x.w,c:!!x.c,v:S.a[x.k]||'unknown'});
-});
-
-document.querySelectorAll('.scoreQ').forEach(q=>{
-arr.push({
-l:q.dataset.label,
-w:Number(q.dataset.weight),
-c:q.dataset.critical==='yes',
-v:S.a[q.dataset.key]||'unknown'
-});
-});
-
-document.querySelectorAll('.scored').forEach(e=>{
-arr.push({
-l:e.dataset.label,
-w:Number(e.dataset.weight),
-c:e.dataset.critical==='yes',
-v:e.value||'unknown'
-});
-});
-
-return arr;
+  let arr=[];
+  Object.values(defs).flat().forEach(x=>arr.push({l:x.l,w:x.w,c:!!x.c,v:S.a[x.k]||'unknown'}));
+  dealerQs.forEach(x=>arr.push({l:x.l,w:x.w,c:!!x.c,v:S.a[x.k]||'unknown'}));
+  document.querySelectorAll('.scoreQ').forEach(q=>arr.push({
+    l:q.dataset.label,w:Number(q.dataset.weight),c:q.dataset.critical==='yes',v:S.a[q.dataset.key]||'unknown'
+  }));
+  document.querySelectorAll('.scored').forEach(e=>arr.push({
+    l:e.dataset.label,w:Number(e.dataset.weight),c:e.dataset.critical==='yes',v:e.value||'unknown'
+  }));
+  return arr;
 }
 
 function calc(){
-odometer();
-
-const arr=allItems();
-
-let total=0,used=0,possible=0;
-let pos=[],con=[],critical=[];
-
-arr.forEach(x=>{
-possible+=x.w;
-const v=SCALE[x.v];
-if(v===null||v===undefined)return;
-
-used+=x.w;
-total+=v*x.w;
-
-if(x.v==='excellent'||x.v==='good')pos.push(x);
-if(x.v==='mixed'||x.v==='concern'||x.v==='bad')con.push(x);
-if(x.c&&(x.v==='concern'||x.v==='bad'))critical.push(x);
-});
-
-const score=used?Math.round(((total/used)+1)/2*100):null;
-const coverage=possible?Math.round(used/possible*100):0;
-
-renderConclusion(score,coverage,pos,con,critical);
-valuation(score,coverage,critical);
+  odometer();
+  const arr=allItems();
+  let total=0,used=0,possible=0,pos=[],con=[],critical=[];
+  arr.forEach(x=>{
+    possible+=x.w;
+    const v=SCALE[x.v];
+    if(v===null||v===undefined)return;
+    used+=x.w;total+=v*x.w;
+    if(x.v==='excellent'||x.v==='good')pos.push(x);
+    if(x.v==='mixed'||x.v==='concern'||x.v==='bad')con.push(x);
+    if(x.c&&(x.v==='concern'||x.v==='bad'))critical.push(x);
+  });
+  const score=used?Math.round(((total/used)+1)/2*100):null;
+  const coverage=possible?Math.round(used/possible*100):0;
+  renderConclusion(score,coverage,pos,con,critical);
+  valuation(score,coverage,critical);
 }
 
 function renderConclusion(score,coverage,pos,con,critical){
-$('score').textContent=score===null?'—':score;
-
-const color=
-score>=85?'#34d399':
-score>=70?'#60a5fa':
-score>=55?'#fbbf24':'#fb7185';
-
-$('ring').style.background=`conic-gradient(${color} ${(score||0)*3.6}deg,#27313d 0)`;
-
-const hard=critical.some(x=>x.v==='bad');
-
-let v='Not enough information';
-let t='Unknown answers do not count against the car.';
-
-if(hard){
-v='Strong walk-away signal';
-t='At least one critical finding is BAD.';
-}
-else if(critical.length>=2){
-v='Major questions remain';
-t='Multiple high-consequence concerns need resolution.';
-}
-else if(score>=85){
-v='Strong candidate — negotiate';
-t='Inspection evidence is unusually positive.';
-}
-else if(score>=72){
-v='Good candidate if price compensates';
-t='Positive overall, but rebuilt-title and Tesla Unsupported Vehicle risk remain.';
-}
-else if(score>=58){
-v='Conditional / negotiate aggressively';
-t='Enough positives to remain interested only at the right number.';
-}
-else if(score!==null){
-v='High risk / likely pass';
-t='The evidence is not supporting enough value.';
+  $('score').textContent=score===null?'—':score;
+  const color=score>=85?'#34d399':score>=70?'#60a5fa':score>=55?'#fbbf24':'#fb7185';
+  $('ring').style.background=`conic-gradient(${color} ${(score||0)*3.6}deg,#27313d 0)`;
+  const hard=critical.some(x=>x.v==='bad');
+  let v='Not enough information',t='Unknown answers do not count against the car.';
+  if(hard){v='Strong walk-away signal';t='At least one critical finding is BAD.';}
+  else if(critical.length>=2){v='Major questions remain';t='Multiple high-consequence concerns need resolution.';}
+  else if(score>=85){v='Strong candidate - negotiate';t='Inspection evidence is unusually positive.';}
+  else if(score>=72){v='Good candidate if price compensates';t='Positive overall, but rebuilt-title/Tesla risks remain.';}
+  else if(score>=58){v='Conditional - negotiate aggressively';t='Enough positives to stay interested only at the right number.';}
+  else if(score!==null){v='High risk / likely pass';t='The evidence is not supporting enough value.';}
+  $('verdict').textContent=v;$('verdictText').textContent=t;$('coverage').textContent='Evidence coverage: '+coverage+'%';
+  pos.sort((a,b)=>b.w-a.w);con.sort((a,b)=>b.w-a.w);
+  $('positives').innerHTML=pos.length?pos.slice(0,12).map(x=>`<div class="flag good">${x.l}</div>`).join(''):'<div class="lead">No positives recorded yet.</div>';
+  $('concerns').innerHTML=con.length?con.slice(0,14).map(x=>`<div class="flag ${x.v==='bad'?'bad':''}">${x.l} - ${x.v}</div>`).join(''):'<div class="lead">No concerns recorded yet.</div>';
+  $('critical').innerHTML=critical.length?critical.map(x=>`<div class="flag ${x.v==='bad'?'bad':''}">⚠ ${x.l} - ${x.v}</div>`).join(''):'<div class="box good">No selected critical concern.</div>';
 }
 
-$('verdict').textContent=v;
-$('verdictText').textContent=t;
-$('coverage').textContent='Evidence coverage: '+coverage+'%';
-
-pos.sort((a,b)=>b.w-a.w);
-con.sort((a,b)=>b.w-a.w);
-
-$('positives').innerHTML=
-pos.length?pos.slice(0,10).map(x=>`<div class="flag good">${x.l}</div>`).join(''):
-'<div class="lead">No positives recorded yet.</div>';
-
-$('concerns').innerHTML=
-con.length?con.slice(0,12).map(x=>`<div class="flag ${x.v==='bad'?'bad':''}">${x.l} — ${x.v}</div>`).join(''):
-'<div class="lead">No concerns recorded yet.</div>';
-
-$('critical').innerHTML=
-critical.length?critical.map(x=>`<div class="flag ${x.v==='bad'?'bad':''}">⚠ ${x.l} — ${x.v}</div>`).join(''):
-'<div class="box good">No selected critical concern.</div>';
-}
-
-function round250(n){
-return Math.round(n/250)*250;
-}
+function round250(n){return Math.round(n/250)*250;}
 
 function valuation(score,coverage,critical){
+  if(score===null)score=65;
+  const hard=critical.some(x=>x.v==='bad');
 
-if(score===null)score=65;
+  let discount;
+  if(hard)discount=.54;
+  else if(score>=90)discount=.30;
+  else if(score>=82)discount=.33;
+  else if(score>=74)discount=.36;
+  else if(score>=66)discount=.39;
+  else if(score>=58)discount=.43;
+  else if(score>=50)discount=.47;
+  else discount=.54;
 
-const hard=critical.some(x=>x.v==='bad');
+  // Tesla unsupported / charging uncertainty
+  if(S.a.hvInspection==='concern'||S.a.hvInspection==='unknown')discount+=.02;
+  if(S.a.fastCharge==='concern'||S.a.fastCharge==='unknown')discount+=.02;
+  if(S.a.fastCharge==='bad')discount+=.06;
+  if(S.a.postTransferRisk==='concern'||S.a.postTransferRisk==='unknown')discount+=.03;
+  if(S.a.postTransferRisk==='bad')discount+=.06;
+  if(S.a.appStatus==='bad')discount+=.03;
 
-let discount;
+  // 2025 post-rebuild accident uncertainty
+  if(S.a.crash2025==='mixed')discount+=.01;
+  if(S.a.crash2025==='concern'||S.a.crash2025==='unknown')discount+=.03;
+  if(S.a.crash2025==='bad')discount+=.07;
 
-if(hard)discount=.52;
-else if(score>=90)discount=.29;
-else if(score>=82)discount=.32;
-else if(score>=74)discount=.35;
-else if(score>=66)discount=.38;
-else if(score>=58)discount=.42;
-else if(score>=50)discount=.46;
-else discount=.52;
+  // Mileage uncertainty
+  if(S.a.odoExplain==='concern'||S.a.odoExplain==='unknown')discount+=.025;
+  if(S.a.odoExplain==='bad')discount+=.08;
 
-/*
-Tesla Unsupported Vehicle adjustments
-*/
+  // Verified low-mileage upside, but small because title history is permanent
+  const odo=Number(S.f.odo||0);
+  const lowMiles=odo>0&&odo<7500&&
+    (S.a.serviceMileage==='excellent'||S.a.serviceMileage==='good')&&
+    (S.a.odoExplain==='excellent'||S.a.odoExplain==='good')&&
+    (S.a.titleOdoStatus==='excellent'||S.a.titleOdoStatus==='good');
+  if(lowMiles)discount-=.035;
 
-if(S.a.hvInspection==='concern'||S.a.hvInspection==='unknown')discount+=.02;
-if(S.a.fastCharge==='concern'||S.a.fastCharge==='unknown')discount+=.02;
-if(S.a.fastCharge==='bad')discount+=.06;
-if(S.a.appStatus==='bad')discount+=.03;
+  discount=Math.max(.28,Math.min(.62,discount));
 
-discount=Math.min(.58,discount);
+  const fair=round250(CLEAN_KBB*(1-discount));
+  const target=round250(fair*.94);
+  const open=round250(target*.90);
+  const ask=Number(S.f.ask||19992);
+  let ceiling=Math.min(round250(target*1.05),ask-250);
 
-/*
-Verified ultra-low mileage small upside
-*/
+  $('fairValue').textContent='$'+fair.toLocaleString();
+  $('targetValue').textContent='$'+target.toLocaleString();
+  $('recommendedOpen').textContent='$'+open.toLocaleString();
+  $('recommendedCeiling').textContent='$'+ceiling.toLocaleString();
+  $('fairDiscount').textContent=Math.round(discount*100)+'% below clean-title KBB baseline';
 
-const odo=Number(S.f.odo||0);
+  $('valuationMath').innerHTML=`
+    <div class="calcLine"><span>KBB clean-title dealer baseline</span><b>$23,200</b></div>
+    <div class="calcLine"><span>Weighted evidence score</span><b>${score}/100</b></div>
+    <div class="calcLine"><span>Evidence coverage</span><b>${coverage}%</b></div>
+    <div class="calcLine"><span>Applied rebuilt/history/Tesla risk deduction</span><b>-${Math.round(discount*100)}%</b></div>
+    <div class="calcLine"><span>Risk-adjusted rebuilt fair value</span><b>$${fair.toLocaleString()}</b></div>
+    <div class="calcLine"><span>Preferred purchase target</span><b>$${target.toLocaleString()}</b></div>
+    <div class="formula">
+      The discount can improve modestly if the ~5k mileage is independently corroborated and Tesla status is documented.
+      It increases sharply for unresolved mileage, a confirmed second rear-end collision, structural/HV concerns, Supercharging restrictions,
+      or uncertainty that Tesla has processed the rebuilt history.
+    </div>`;
 
-const lowMiles=
-odo>0 &&
-odo<7500 &&
-(S.a.serviceMileage==='excellent'||S.a.serviceMileage==='good') &&
-(S.a.odoExplain==='excellent'||S.a.odoExplain==='good');
+  const rec=$('negRecommendation');
+  if(hard){rec.className='box bad';rec.textContent='Do not negotiate yet. A critical safety/service/identity issue is unresolved.';}
+  else if(score>=85){rec.className='box good';rec.textContent=`Strong rebuilt-title candidate. Open around $${open.toLocaleString()}, target around $${target.toLocaleString()}, and resist exceeding about $${ceiling.toLocaleString()}.`;}
+  else if(score>=70){rec.className='box good';rec.textContent=`Potentially viable only with a meaningful rebuilt-title discount. Open around $${open.toLocaleString()} and try to stay near $${target.toLocaleString()}.`;}
+  else if(score>=58){rec.className='box';rec.textContent=`Risk remains material. I'd want about $${target.toLocaleString()} or less before accepting the uncertainty.`;}
+  else{rec.className='box bad';rec.textContent=`Likely pass unless the price becomes unusually low and the critical uncertainties are resolved.`;}
 
-if(lowMiles)discount-=.03;
+  $('negScript').textContent=
+`“I like the car more than I expected, but I have to value what it actually is.
 
-discount=Math.max(.27,discount);
+KBB is about $23,200 for a clean-title 2021 Standard Range Plus at a dealer. This car has permanent rebuilt history, a documented major rear-end total loss, the NMVTIS mileage anomaly, Tesla Unsupported Vehicle considerations, and now a separate 2025 rear-end crash record that I need to price in unless it can be clearly disproven or documented as minor.
 
-const fair=round250(CLEAN_KBB*(1-discount));
-const target=round250(fair*.94);
-const open=round250(target*.90);
-const ceiling=Math.min(round250(target*1.05),Number(S.f.ask||19992)-250);
-
-$('fairValue').textContent='$'+fair.toLocaleString();
-$('targetValue').textContent='$'+target.toLocaleString();
-$('recommendedOpen').textContent='$'+open.toLocaleString();
-$('recommendedCeiling').textContent='$'+ceiling.toLocaleString();
-$('fairDiscount').textContent=Math.round(discount*100)+'% below clean-title baseline';
-
-$('valuationMath').innerHTML=`
-<div class="calcLine"><span>KBB clean-title dealer baseline</span><b>$23,200</b></div>
-<div class="calcLine"><span>Evidence score</span><b>${score}/100</b></div>
-<div class="calcLine"><span>Evidence coverage</span><b>${coverage}%</b></div>
-<div class="calcLine"><span>Rebuilt/Tesla unsupported risk deduction</span><b>−${Math.round(discount*100)}%</b></div>
-<div class="calcLine"><span>Risk-adjusted rebuilt value</span><b>$${fair.toLocaleString()}</b></div>
-<div class="calcLine"><span>Preferred target</span><b>$${target.toLocaleString()}</b></div>`;
-
-const rec=$('negRecommendation');
-
-if(hard){
-rec.className='box bad';
-rec.textContent='Do not negotiate yet. A critical safety/service/identity issue is unresolved.';
-}
-else if(score>=85){
-rec.className='box good';
-rec.textContent=`Strong rebuilt-title candidate. Open around $${open.toLocaleString()}, target around $${target.toLocaleString()}, and resist exceeding about $${ceiling.toLocaleString()}.`;
-}
-else if(score>=70){
-rec.className='box good';
-rec.textContent=`Viable only with meaningful rebuilt-title discount. Open around $${open.toLocaleString()} and try to stay near $${target.toLocaleString()}.`;
-}
-else{
-rec.className='box';
-rec.textContent=`Risk remains significant. I'd want about $${target.toLocaleString()} or less before accepting the uncertainty.`;
-}
-
-$('negScript').textContent=
-`“I like the car, but I have to value what it actually is.
-
-A clean-title 2021 Standard Range Plus is around the low-$20k range, but this car has permanent rebuilt history, a documented total loss, the odometer-record anomaly, and Tesla Unsupported Vehicle implications.
-
-I'm also taking on reduced resale value and uncertainty around Tesla HV-service and fast-charging status.
-
-Based on what I've seen today, I'm around $${open.toLocaleString()}.
+Based on what I've verified today, I'm around $${open.toLocaleString()}.
 
 If you can get reasonably close to that, I'm interested in making a deal.”`;
 
-$('leverage').innerHTML=[
-'Permanent Michigan REBUILT SALVAGE title',
-'Tesla warranties void on Unsupported Vehicle',
-'Tesla HV Safety Inspection status',
-'Fast Charging Safety Inspection / Supercharging status',
-'$34,491 accident estimate',
-'138,918-mile NMVTIS anomaly',
-'Listed since 2023',
-'Reduced resale / trade options'
-].concat(critical.map(x=>'Unresolved: '+x.l))
-.map(x=>`<span class="pill">${x}</span>`).join(' ');
+  $('leverage').innerHTML=[
+    'Clean KBB dealer benchmark: $23,200',
+    'Permanent Michigan REBUILT SALVAGE brand',
+    '$34,491 original repair estimate',
+    '138,918-mi NMVTIS title-entry anomaly',
+    '2025 post-rebuild rear-end crash record',
+    'Tesla warranty void if classified Unsupported',
+    'HV Safety Inspection status',
+    'Fast Charging / Supercharging status',
+    'Possible post-transfer Tesla status risk',
+    'Listed for years with major price reductions'
+  ].concat(critical.map(x=>'Unresolved: '+x.l)).map(x=>`<span class="pill">${x}</span>`).join(' ');
 
-counterAdvice(open,target,ceiling,hard);
+  counterAdvice(open,target,ceiling,hard);
 }
 
 function counterAdvice(open,target,ceiling,hard){
-const n=Number(S.f.counter||0);
-const b=$('counterAdvice');
-
-if(!n){
-b.className='box';
-b.textContent='Enter their counter for live guidance.';
-return;
-}
-
-if(hard){
-b.className='box bad';
-b.textContent='Price does not solve the critical finding. Resolve it first.';
-}
-else if(n<=open){
-b.className='box good';
-b.textContent='At/below opening target. Stop negotiating against yourself and verify all fees/title paperwork.';
-}
-else if(n<=target){
-b.className='box good';
-b.textContent='Inside preferred purchase range.';
-}
-else if(n<=ceiling){
-b.className='box';
-b.textContent='Acceptable territory, but above preferred target. Try one final move downward.';
-}
-else if(n<=ceiling+1500){
-b.className='box';
-b.textContent='Close enough to keep talking, but above your risk-adjusted ceiling.';
-}
-else{
-b.className='box bad';
-b.textContent='Too close to clean-title alternatives. Leave your number and be willing to walk.';
-}
+  const n=Number(S.f.counter||0),b=$('counterAdvice');
+  if(!n){b.className='box';b.textContent='Enter their counter for live guidance.';return;}
+  if(hard){b.className='box bad';b.textContent='Price does not solve the critical finding. Resolve it first.';}
+  else if(n<=open){b.className='box good';b.textContent='At or below your opening target. Stop negotiating against yourself. Verify all dealer fees, title wording and out-the-door number.';}
+  else if(n<=target){b.className='box good';b.textContent='Inside the preferred purchase range. If the inspection is strong, this is a legitimately attractive rebuilt-title price.';}
+  else if(n<=ceiling){b.className='box';b.textContent='Acceptable territory, but above the preferred target. Try one final move downward.';}
+  else if(n<=ceiling+1500){b.className='box';b.textContent='Close enough to keep talking, but above your risk-adjusted ceiling. Re-anchor on clean-title alternatives and permanent resale limitations.';}
+  else{b.className='box bad';b.textContent='Still too close to clean-title money. Leave your number and be willing to walk.';}
 }
 
 function bind(){
-document.querySelectorAll('input,select,textarea').forEach(e=>{
-if(S.f[e.id]!==undefined)e.value=S.f[e.id];
-else if(e.value)S.f[e.id]=e.value;
-
-const h=()=>{
-S.f[e.id]=e.value;
-save();
-calc();
-};
-
-e.oninput=h;
-e.onchange=h;
-});
+  document.querySelectorAll('input,select,textarea').forEach(e=>{
+    if(S.f[e.id]!==undefined)e.value=S.f[e.id];
+    else if(e.value)S.f[e.id]=e.value;
+    const h=()=>{S.f[e.id]=e.value;save();calc();};
+    e.oninput=h;e.onchange=h;
+  });
 }
 
 function exportSummary(){
-const text=
-`TESLA INSPECTION
+  const text=`TESLA INSPECTION PLAYBOOK
 VIN: 5YJ3E1EA2MF052825
 
 FIELDS
@@ -1058,15 +1091,12 @@ ${JSON.stringify(S.f,null,2)}
 ANSWERS
 ${JSON.stringify(S.a,null,2)}
 `;
-
-const a=document.createElement('a');
-a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));
-a.download='tesla-inspection-summary.txt';
-a.click();
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));
+  a.download='tesla-inspection-summary.txt';a.click();
 }
 
-nav();
-
+makeNav();
 renderChecks('inChecks',defs.incar);
 renderChecks('driveChecks',defs.drive);
 renderChecks('inspectChecks',defs.inspect);
@@ -1075,30 +1105,15 @@ renderDealerQs();
 setupScoreQs();
 bind();
 
-document.querySelectorAll('.next').forEach(b=>{
-b.onclick=()=>{
-const i=tabs.indexOf(S.tab);
-show(tabs[Math.min(i+1,tabs.length-1)]);
-};
+document.querySelectorAll('.next').forEach(b=>b.onclick=()=>{
+  const i=tabs.indexOf(S.tab);show(tabs[Math.min(i+1,tabs.length-1)]);
 });
-
-$('back').onclick=()=>{
-const i=tabs.indexOf(S.tab);
-show(tabs[Math.max(0,i-1)]);
-};
-
+$('back').onclick=()=>{const i=tabs.indexOf(S.tab);show(tabs[Math.max(0,i-1)]);};
 $('export').onclick=exportSummary;
-
-$('reset').onclick=()=>{
-if(confirm('Reset all saved inspection data?')){
-localStorage.removeItem('teslaPlaybookV6');
-location.reload();
-}
-};
+$('reset').onclick=()=>{if(confirm('Reset all saved inspection data?')){localStorage.removeItem('teslaPlaybookV7');location.reload();}};
 
 show(S.tab);
 calc();
-
 </script>
 </body>
 </html>
